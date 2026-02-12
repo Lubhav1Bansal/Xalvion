@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xalvion Web Design | Lubhav Bansal</title>
+    <link rel="icon" type="image/png" href="assets/xalvion-logo.png">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Phosphor Icons for modern, sleek icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        // Neutral, warm replacements for pure black and white
+                        black: '#171614',        // Warm Charcoal / Off-black
+                        white: '#f4f3eb',        // Soft Sand / Bone white
+                        surface: '#24221f',      // Lighter charcoal for dark cards
+                        surfaceLight: '#ebe9e1', // Darker sand for light cards
+                        accent: '#f4f3eb', 
+                        accentDark: '#171614',
+                        // Warm gray scale (Stone palette)
+                        gray: {
+                            100: '#f5f5f4', 200: '#e7e5e4', 300: '#d6d3d1', 400: '#a8a29e',
+                            500: '#78716c', 600: '#57534e', 700: '#44403c', 800: '#292524', 900: '#1c1917',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #171614;
+            color: #d6d3d1;
+        }
+        
+        /* Dark Theme Cards */
+        .glass-dark {
+            background: #24221f;
+            border: 1px solid #36332e;
+        }
+
+        /* Light Theme Cards */
+        .glass-light {
+            background: #ffffff; /* Stays pure white to pop against the sand background */
+            border: 1px solid #e7e5e4;
+            box-shadow: 0 10px 30px -10px rgba(23, 22, 20, 0.08);
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+        }
+        .glass-dark.card-hover:hover {
+            box-shadow: 0 10px 30px -10px rgba(244, 243, 235, 0.05);
+            border-color: rgba(244, 243, 235, 0.3);
+        }
+        .glass-light.card-hover:hover {
+            box-shadow: 0 10px 30px -10px rgba(23, 22, 20, 0.15);
+            border-color: rgba(23, 22, 20, 0.6);
+        }
+
+        /* Hide scrollbar for nav */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-white selection:text-black">
+
+    <!-- XALVION LOGO (Fixed Top Left) -->
+    <a href="#home" class="fixed top-5 left-5 md:top-6 md:left-8 z-50 flex items-center gap-3 group bg-black/50 md:bg-transparent backdrop-blur-md md:backdrop-blur-none p-2 md:p-0 rounded-2xl border border-white/10 md:border-transparent">
+        <img src="assets/xalvion-logo.png" alt="Xalvion Logo" class="w-10 h-10 md:w-11 md:h-11 rounded-xl object-cover border border-white/10 group-hover:border-white/30 transition-all shadow-lg">
+        <span class="font-display font-bold text-xl tracking-widest text-white group-hover:text-gray-300 transition-colors hidden sm:block">XALVION</span>
+    </a>
+
+    <!-- Floating Navigation Icons with Labels (Resized & Compact) -->
+    <nav class="fixed bottom-6 md:bottom-auto md:top-6 left-1/2 -translate-x-1/2 z-50 glass-dark rounded-full px-5 md:px-6 py-2.5 md:py-3 flex items-center gap-4 md:gap-6 shadow-2xl overflow-x-auto no-scrollbar max-w-[95vw] md:max-w-fit border border-white/10">
+        <a href="#home" class="nav-link text-gray-400 hover:text-white transition-all flex items-center gap-1.5 group shrink-0" aria-label="Home">
+            <i class="ph ph-house text-lg md:text-xl"></i>
+            <span class="text-[11px] md:text-xs font-bold uppercase tracking-widest hidden md:inline-block">Home</span>
+        </a>
+        <a href="#about" class="nav-link text-gray-400 hover:text-white transition-all flex items-center gap-1.5 group shrink-0" aria-label="About">
+            <i class="ph ph-user text-lg md:text-xl"></i>
+            <span class="text-[11px] md:text-xs font-bold uppercase tracking-widest hidden md:inline-block">About</span>
+        </a>
+        <a href="#services" class="nav-link text-gray-400 hover:text-white transition-all flex items-center gap-1.5 group shrink-0" aria-label="Services">
+            <i class="ph ph-sparkle text-lg md:text-xl"></i>
+            <span class="text-[11px] md:text-xs font-bold uppercase tracking-widest hidden md:inline-block">Services</span>
+        </a>
+        <a href="#portfolio" class="nav-link text-gray-400 hover:text-white transition-all flex items-center gap-1.5 group shrink-0" aria-label="Portfolio">
+            <i class="ph ph-briefcase text-lg md:text-xl"></i>
+            <span class="text-[11px] md:text-xs font-bold uppercase tracking-widest hidden md:inline-block">Portfolio</span>
+        </a>
+        <a href="#pricing" class="nav-link text-gray-400 hover:text-white transition-all flex items-center gap-1.5 group shrink-0" aria-label="Pricing">
+            <i class="ph ph-tag text-lg md:text-xl"></i>
+            <span class="text-[11px] md:text-xs font-bold uppercase tracking-widest hidden md:inline-block">Pricing</span>
+        </a>
+        <a href="#contact" class="nav-link text-gray-400 hover:text-white transition-all flex items-center gap-1.5 group shrink-0" aria-label="Contact">
+            <i class="ph ph-paper-plane-tilt text-lg md:text-xl"></i>
+            <span class="text-[11px] md:text-xs font-bold uppercase tracking-widest hidden md:inline-block">Connect</span>
+        </a>
+    </nav>
+
+    <main class="overflow-x-hidden">
+
+        <!-- SECTION 1: HERO (DARK THEME) -->
+        <section id="home" class="bg-black text-white w-full min-h-screen flex items-center pt-24 pb-20 relative">
+            <div class="max-w-7xl mx-auto px-6 w-full flex flex-col-reverse lg:flex-row items-center justify-between gap-8 lg:gap-0 fade-in">
+                
+                <!-- Text Content (Left) -->
+                <div class="flex-1 flex flex-col justify-center items-start w-full relative z-10 lg:pr-10 lg:py-20">
+                    <div class="inline-block px-4 py-2 rounded-full glass-dark text-white text-sm font-semibold tracking-wide mb-6">
+                        🚀 Available for new projects
+                    </div>
+                    <h1 class="font-display text-5xl md:text-7xl lg:text-8xl font-bold leading-tight mb-6">
+                        Hi, I'm <br class="md:hidden"> <span class="text-white">Lubhav Bansal</span>.
+                    </h1>
+                    <h2 class="text-2xl md:text-3xl text-gray-400 font-light mb-8 max-w-xl">
+                        Founder of <strong class="text-white font-medium uppercase tracking-wider">Xalvion</strong>. A fresh, motivated Website Designer crafting digital experiences.
+                    </h2>
+                    
+                    <div class="flex flex-wrap gap-4 mb-16">
+                        <a href="#contact" class="bg-white text-black px-8 py-4 rounded-full font-semibold hover:bg-gray-200 transition-colors flex items-center gap-2">
+                            Let's Connect <i class="ph ph-arrow-right"></i>
+                        </a>
+                        <a href="#portfolio" class="glass-dark text-white px-8 py-4 rounded-full font-semibold hover:bg-white/10 transition-colors">
+                            View Portfolio
+                        </a>
+                    </div>
+
+                    <!-- Stats Bar -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 w-full glass-dark rounded-2xl p-6 md:p-8 max-w-3xl backdrop-blur-md">
+                        <div class="text-center">
+                            <p class="text-3xl md:text-4xl font-display font-bold text-white mb-1">0</p>
+                            <p class="text-sm text-gray-400">Years Experience <br><span class="text-white text-xs">(Just Started!)</span></p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-3xl md:text-4xl font-display font-bold text-white mb-1">0</p>
+                            <p class="text-sm text-gray-400">Projects Completed</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-3xl md:text-4xl font-display font-bold text-white mb-1">0</p>
+                            <p class="text-sm text-gray-400">Industries Covered</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-3xl md:text-4xl font-display font-bold text-white mb-1">0</p>
+                            <p class="text-sm text-gray-400">Happy Clients <br><span class="text-gray-300 text-xs">(Be the first!)</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image Content (Right) -->
+                <div class="w-full lg:w-[45%] lg:absolute lg:right-0 lg:top-0 lg:bottom-0 flex justify-center items-end h-[50vh] lg:h-auto overflow-hidden rounded-3xl lg:rounded-none">
+                    <div class="relative w-full h-full max-w-md lg:max-w-none flex items-end justify-center">
+                        <!-- ADD YOUR IMAGE HERE (lubhav-photo.png) -->
+                        <img 
+                            src="assets/lubhav-photo.png" 
+                            alt="Lubhav Bansal" 
+                            class="w-full h-[85%] object-cover object-bottom grayscale sepia-[.2] contrast-[1.1] brightness-[0.9] drop-shadow-2xl"
+                        >
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent lg:hidden"></div>
+                        <div class="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent hidden lg:block"></div>
+                        <div class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black to-transparent"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: ABOUT & EDUCATION (LIGHT THEME) -->
+        <section id="about" class="bg-white text-black w-full py-24 scroll-mt-10 fade-in border-y border-gray-200">
+            <div class="max-w-7xl mx-auto px-6">
+                
+                <!-- Section Header with Social Icons -->
+                <div class="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-6">
+                    <h2 class="font-display text-4xl md:text-5xl font-bold flex items-center gap-4 text-black">
+                        <i class="ph-fill ph-user-circle text-black"></i> About Me
+                    </h2>
+                    
+                    <div class="flex gap-4">
+                        <!-- LinkedIn -->
+                        <a href="https://www.linkedin.com/in/lubhav-bansal-30238134a" target="_blank" rel="noopener noreferrer" 
+                           class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 transition-all duration-300 hover:-translate-y-1 hover:bg-[#0A66C2] hover:text-white hover:shadow-[0_10px_20px_rgba(10,102,194,0.3)] border border-transparent hover:border-[#0A66C2]">
+                            <i class="ph-fill ph-linkedin-logo text-2xl"></i>
+                        </a>
+                        
+                        <!-- GitHub -->
+                        <a href="https://github.com/Lubhav1Bansal" target="_blank" rel="noopener noreferrer" 
+                           class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 transition-all duration-300 hover:-translate-y-1 hover:bg-black hover:text-white hover:shadow-[0_10px_20px_rgba(0,0,0,0.2)] border border-transparent hover:border-black">
+                            <i class="ph-fill ph-github-logo text-2xl"></i>
+                        </a>
+
+                        <!-- Instagram -->
+                        <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer" 
+                           class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 transition-all duration-300 hover:-translate-y-1 relative overflow-hidden group hover:shadow-[0_10px_20px_rgba(220,39,67,0.3)]">
+                            <div class="absolute inset-0 bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <i class="ph-fill ph-instagram-logo text-2xl relative z-10 group-hover:text-white transition-colors duration-300"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-12">
+                    <div class="glass-light p-8 rounded-3xl">
+                        <h3 class="text-2xl font-semibold mb-4 text-black">The Journey Begins</h3>
+                        <p class="text-gray-600 leading-relaxed mb-6">
+                            I'm Lubhav, an aspiring website designer based in India. While my counters might currently say zero, my drive to create aesthetic, functional, and modern websites is at 100%. I specialize in blending AI tools with standard web technologies to deliver cost-effective and beautiful digital storefronts for businesses.
+                        </p>
+                        <p class="text-gray-600 leading-relaxed">
+                            I believe in transparency. I'm building my portfolio from the ground up, which means you get dedicated attention, fresh perspectives, and highly competitive rates as we grow together.
+                        </p>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <!-- Education -->
+                        <div class="glass-light p-6 rounded-2xl border-l-4 border-l-black">
+                            <div class="flex items-center gap-3 mb-2">
+                                <div class="p-2 bg-gray-100 rounded-lg text-black"><i class="ph ph-graduation-cap text-xl"></i></div>
+                                <h4 class="text-xl font-semibold text-black">Education</h4>
+                            </div>
+                            <h5 class="text-lg text-gray-800">Chitkara University</h5>
+                            <p class="text-gray-500 text-sm font-medium">2nd Semester Student • Present</p>
+                            <p class="text-gray-600 text-sm mt-2">Currently pursuing my degree and actively applying classroom theories to real-world freelance projects.</p>
+                        </div>
+
+                        <!-- Experience -->
+                        <div class="glass-light p-6 rounded-2xl border-l-4 border-l-gray-400">
+                            <div class="flex items-center gap-3 mb-2">
+                                <div class="p-2 bg-gray-100 rounded-lg text-black"><i class="ph ph-briefcase text-xl"></i></div>
+                                <h4 class="text-xl font-semibold text-black">Work Experience</h4>
+                            </div>
+                            <h5 class="text-lg text-gray-800">Freelance Web Designer</h5>
+                            <p class="text-gray-500 text-sm font-medium">Just Started</p>
+                            <p class="text-gray-600 text-sm mt-2">Blank canvas! Actively seeking initial clients to build high-converting websites and establish a strong portfolio.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: FAVORITE TOOLS (DARK THEME) -->
+        <section id="tools" class="bg-black text-white w-full py-24 scroll-mt-10 fade-in">
+            <div class="max-w-7xl mx-auto px-6">
+                <h2 class="font-display text-4xl md:text-5xl font-bold mb-12 flex items-center gap-4">
+                    <i class="ph-fill ph-wrench text-white"></i> My Favorite Tools
+                </h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                    <div class="glass-dark p-6 rounded-2xl text-center card-hover flex flex-col items-center justify-center gap-3 group">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" class="w-12 h-12 transition-transform duration-300 group-hover:scale-110" alt="HTML">
+                        <span class="text-sm font-medium">HTML5</span>
+                    </div>
+                    <div class="glass-dark p-6 rounded-2xl text-center card-hover flex flex-col items-center justify-center gap-3 group">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" class="w-12 h-12 transition-transform duration-300 group-hover:scale-110" alt="CSS">
+                        <span class="text-sm font-medium">CSS3</span>
+                    </div>
+                    <div class="glass-dark p-6 rounded-2xl text-center card-hover flex flex-col items-center justify-center gap-3 group">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" class="w-12 h-12 transition-transform duration-300 group-hover:scale-110" alt="Tailwind">
+                        <span class="text-sm font-medium">Tailwind</span>
+                    </div>
+                    <div class="glass-dark p-6 rounded-2xl text-center card-hover flex flex-col items-center justify-center gap-3 group">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" class="w-12 h-12 transition-transform duration-300 group-hover:scale-110" alt="Figma">
+                        <span class="text-sm font-medium">Figma</span>
+                    </div>
+                    <div class="glass-dark p-6 rounded-2xl text-center card-hover flex flex-col items-center justify-center gap-3 group relative overflow-hidden">
+                        <i class="ph-fill ph-magic-wand text-4xl bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent transition-transform duration-300 group-hover:scale-110"></i>
+                        <span class="text-sm font-medium">AI Tools</span>
+                    </div>
+                    <div class="glass-dark p-6 rounded-2xl text-center card-hover flex flex-col items-center justify-center gap-3 group">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" class="w-12 h-12 transition-transform duration-300 group-hover:scale-110" alt="VS Code">
+                        <span class="text-sm font-medium">VS Code</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: SERVICES (LIGHT THEME) -->
+        <section id="services" class="bg-white text-black w-full py-24 scroll-mt-10 fade-in border-y border-gray-200">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="font-display text-4xl md:text-5xl font-bold mb-4">What I Can Do For You</h2>
+                    <p class="text-gray-600 text-lg">Simple, effective, and modern solutions to get your business online.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="glass-light p-8 rounded-3xl card-hover relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-gray-100 rounded-full blur-3xl -mr-10 -mt-10 transition-all group-hover:bg-gray-200"></div>
+                        <i class="ph ph-layout text-4xl text-black mb-6 block"></i>
+                        <h3 class="text-xl font-bold text-black mb-3">Website Design</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">Crafting visually appealing, Gen-Z friendly, and modern layouts tailored to your brand identity.</p>
+                    </div>
+                    <div class="glass-light p-8 rounded-3xl card-hover relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-gray-100 rounded-full blur-3xl -mr-10 -mt-10 transition-all group-hover:bg-gray-200"></div>
+                        <i class="ph ph-code text-4xl text-black mb-6 block"></i>
+                        <h3 class="text-xl font-bold text-black mb-3">AI-Assisted Development</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">Leveraging the latest AI tools combined with HTML/CSS to build websites faster and more cost-effectively.</p>
+                    </div>
+                    <div class="glass-light p-8 rounded-3xl card-hover relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-gray-100 rounded-full blur-3xl -mr-10 -mt-10 transition-all group-hover:bg-gray-200"></div>
+                        <i class="ph ph-device-mobile text-4xl text-black mb-6 block"></i>
+                        <h3 class="text-xl font-bold text-black mb-3">Responsive Sites</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">Ensuring your website looks perfect and functions smoothly on mobile phones, tablets, and desktops.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: PORTFOLIO (DARK THEME) -->
+        <section id="portfolio" class="bg-black text-white w-full py-24 scroll-mt-10 fade-in">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+                    <div>
+                        <h2 class="font-display text-4xl md:text-5xl font-bold mb-4 flex items-center gap-4">
+                            <i class="ph-fill ph-circles-four text-white"></i> Latest Projects
+                        </h2>
+                        <p class="text-gray-400">Space reserved for my upcoming masterpieces.</p>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Placeholder Card 1 -->
+                    <div class="glass-dark rounded-3xl overflow-hidden group border border-dashed border-white/20 hover:border-white transition-colors h-[300px] flex flex-col items-center justify-center text-center p-6">
+                        <div class="w-16 h-16 rounded-full bg-surface flex items-center justify-center mb-4 group-hover:scale-110 transition-transform group-hover:bg-white group-hover:text-black">
+                            <i class="ph ph-plus text-2xl text-gray-500 group-hover:text-black transition-colors"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">Your Project Here</h3>
+                        <p class="text-sm text-gray-400">Let's build something amazing together and feature it right here.</p>
+                    </div>
+                    
+                    <!-- Placeholder Card 2 -->
+                    <div class="glass-dark rounded-3xl overflow-hidden group border border-dashed border-white/20 h-[300px] flex flex-col items-center justify-center text-center p-6 opacity-50">
+                        <i class="ph ph-lock-key text-3xl text-gray-600 mb-3"></i>
+                        <h3 class="text-lg font-bold text-gray-400 mb-2">Slot 02</h3>
+                        <p class="text-sm text-gray-500">Awaiting content</p>
+                    </div>
+
+                    <!-- Placeholder Card 3 -->
+                    <div class="glass-dark rounded-3xl overflow-hidden group border border-dashed border-white/20 h-[300px] flex flex-col items-center justify-center text-center p-6 opacity-50">
+                        <i class="ph ph-lock-key text-3xl text-gray-600 mb-3"></i>
+                        <h3 class="text-lg font-bold text-gray-400 mb-2">Slot 03</h3>
+                        <p class="text-sm text-gray-500">Awaiting content</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 6: PRICING TABLE (LIGHT THEME) -->
+        <section id="pricing" class="bg-white text-black w-full py-24 scroll-mt-10 fade-in border-y border-gray-200">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="font-display text-4xl md:text-5xl font-bold mb-4">Transparent Pricing</h2>
+                    <p class="text-gray-600 text-lg mb-4">Beginner-friendly rates to kickstart my portfolio and your business.</p>
+                    <span class="inline-flex items-center gap-2 bg-gray-100 text-black font-bold px-4 py-2 rounded-full text-sm border border-gray-200 shadow-sm">
+                        <i class="ph-fill ph-handshake text-lg"></i> All prices are negotiable
+                    </span>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8 items-center max-w-5xl mx-auto">
+                    <!-- Basic -->
+                    <div class="glass-light p-8 rounded-3xl">
+                        <h3 class="text-xl text-black font-bold mb-2">Starter</h3>
+                        <div class="mb-6">
+                            <span class="text-4xl font-bold text-black">₹2,999</span>
+                        </div>
+                        <ul class="space-y-4 mb-8 text-sm text-gray-600 font-medium">
+                            <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-black text-lg"></i> Single Page Website</li>
+                            <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-black text-lg"></i> Mobile Responsive</li>
+                            <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-black text-lg"></i> Basic Contact Form</li>
+                            <li class="flex items-center gap-3 opacity-50"><i class="ph ph-x-circle text-lg"></i> Custom Domain Setup</li>
+                        </ul>
+                        <a href="#contact" class="block w-full py-3 px-4 bg-gray-200 text-black text-center rounded-xl hover:bg-gray-300 transition-colors font-bold">Choose Starter</a>
+                    </div>
+
+                    <!-- Pro (Inverse / Highlighted) -->
+                    <div class="bg-black p-8 rounded-3xl text-white relative transform md:-translate-y-4 shadow-2xl">
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white text-black text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider shadow-md">
+                            Recommended
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Standard</h3>
+                        <div class="mb-6">
+                            <span class="text-4xl font-bold text-white">₹5,999</span>
+                        </div>
+                        <ul class="space-y-4 mb-8 text-sm text-gray-300 font-medium">
+                            <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-white text-lg"></i> Up to 5 Pages</li>
+                            <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-white text-lg"></i> Mobile Responsive</li>
+                            <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-white text-lg"></i> Modern UI/UX Design</li>
+                            <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-white text-lg"></i> Custom Domain Setup</li>
+                            <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-white text-lg"></i> 1 Month Free Maintenance</li>
+                        </ul>
+                        <a href="#contact" class="block w-full py-3 px-4 bg-white text-black text-center rounded-xl hover:bg-gray-200 transition-colors font-bold">Choose Standard</a>
+                    </div>
+
+                    <!-- Premium -->
+                    <div class="glass-light p-8 rounded-3xl">
+                        <h3 class="text-xl text-black font-bold mb-2">Premium</h3>
+                        <div class="mb-6">
+                            <span class="text-4xl font-bold text-black">₹9,999</span>
+                        </div>
+                        <ul class="space-y-4 mb-8 text-sm text-gray-600 font-medium">
+                            <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-black text-lg"></i> Up to 10 Pages</li>
+                            <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-black text-lg"></i> Advanced Animations</li>
+                            <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-black text-lg"></i> SEO Optimization Setup</li>
+                            <li class="flex items-center gap-3"><i class="ph-fill ph-check-circle text-black text-lg"></i> 3 Months Maintenance</li>
+                        </ul>
+                        <a href="#contact" class="block w-full py-3 px-4 bg-gray-200 text-black text-center rounded-xl hover:bg-gray-300 transition-colors font-bold">Choose Premium</a>
+                    </div>
+                </div>
+                <p class="text-center text-xs text-gray-500 mt-8 font-medium">*Prices are introductory, fully negotiable based on your needs, and subject to change as my portfolio grows.</p>
+            </div>
+        </section>
+
+        <!-- SECTION 7: TESTIMONIALS (DARK THEME) -->
+        <section class="bg-black text-white w-full py-24 fade-in">
+            <div class="max-w-7xl mx-auto px-6">
+                <h2 class="font-display text-4xl md:text-5xl font-bold mb-16 text-center">Client Testimonials</h2>
+                <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                    <div class="glass-dark p-8 md:p-10 rounded-3xl relative">
+                        <i class="ph-fill ph-quotes text-5xl text-white/10 absolute top-6 right-6"></i>
+                        <div class="flex items-center gap-1 text-white mb-6">
+                            <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
+                        </div>
+                        <p class="text-gray-300 italic mb-8 text-lg">"Even though Lubhav was just starting out, his dedication and aesthetic sense were incredible. He delivered exactly what we needed for our small business."</p>
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center text-black font-bold text-lg">JD</div>
+                            <div>
+                                <h4 class="text-white font-bold">John Doe</h4>
+                                <p class="text-sm text-gray-500">Local Business Owner (Demo)</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-dark p-8 md:p-10 rounded-3xl relative">
+                        <i class="ph-fill ph-quotes text-5xl text-white/10 absolute top-6 right-6"></i>
+                        <div class="flex items-center gap-1 text-white mb-6">
+                            <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
+                        </div>
+                        <p class="text-gray-300 italic mb-8 text-lg">"Fast, responsive, and incredibly modern design. The structured, clean touch really helped our brand stand out. Highly recommended!"</p>
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center text-white font-bold text-lg">AS</div>
+                            <div>
+                                <h4 class="text-white font-bold">Aisha Sharma</h4>
+                                <p class="text-sm text-gray-500">Startup Founder (Demo)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 8: FAQS (LIGHT THEME) -->
+        <section id="faqs" class="bg-white text-black w-full py-24 scroll-mt-10 fade-in border-y border-gray-200">
+            <div class="max-w-3xl mx-auto px-6">
+                <h2 class="font-display text-4xl md:text-5xl font-bold mb-12 text-center">Frequently Asked Questions</h2>
+                <div class="space-y-4">
+                    <div class="glass-light rounded-2xl p-1">
+                        <details class="group">
+                            <summary class="flex justify-between items-center font-bold cursor-pointer list-none p-6 text-black text-lg">
+                                <span>How long does it take to build a website?</span>
+                                <span class="transition group-open:rotate-180">
+                                    <i class="ph ph-caret-down text-xl"></i>
+                                </span>
+                            </summary>
+                            <div class="text-gray-600 mt-2 p-6 pt-0 leading-relaxed">
+                                For a standard 3-5 page website, it typically takes 1 to 2 weeks depending on how fast you can provide the content (text and images) and feedback.
+                            </div>
+                        </details>
+                    </div>
+                    <div class="glass-light rounded-2xl p-1">
+                        <details class="group">
+                            <summary class="flex justify-between items-center font-bold cursor-pointer list-none p-6 text-black text-lg">
+                                <span>Do I need to pay for hosting and domain separately?</span>
+                                <span class="transition group-open:rotate-180">
+                                    <i class="ph ph-caret-down text-xl"></i>
+                                </span>
+                            </summary>
+                            <div class="text-gray-600 mt-2 p-6 pt-0 leading-relaxed">
+                                Yes. My pricing covers the design and development. I will help you choose and set up a domain and hosting plan (like Hostinger or Vercel), but those are separate third-party costs you will own directly.
+                            </div>
+                        </details>
+                    </div>
+                    <div class="glass-light rounded-2xl p-1">
+                        <details class="group">
+                            <summary class="flex justify-between items-center font-bold cursor-pointer list-none p-6 text-black text-lg">
+                                <span>Why should I hire a beginner?</span>
+                                <span class="transition group-open:rotate-180">
+                                    <i class="ph ph-caret-down text-xl"></i>
+                                </span>
+                            </summary>
+                            <div class="text-gray-600 mt-2 p-6 pt-0 leading-relaxed">
+                                Because I have the time and motivation to give your project 100% of my focus. You get modern, fresh designs using the latest tools at a fraction of the cost of established agencies, as I am building my portfolio.
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 9: LETS CONNECT (DARK THEME) -->
+        <section id="contact" class="bg-black text-white w-full py-24 scroll-mt-10 fade-in">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="glass-dark p-8 md:p-16 rounded-[2.5rem] relative overflow-hidden">
+                    <div class="grid md:grid-cols-2 gap-16 items-center">
+                        <div>
+                            <h2 class="font-display text-4xl md:text-6xl font-bold mb-6">Let's Connect! 🚀</h2>
+                            <p class="text-gray-400 mb-12 text-lg leading-relaxed">Ready to build something awesome? Drop me a message and let's discuss your ideas.</p>
+                            
+                            <div class="space-y-8">
+                                <div class="flex items-center gap-5 text-gray-300">
+                                    <div class="w-14 h-14 rounded-full bg-white flex items-center justify-center text-black">
+                                        <i class="ph-fill ph-phone text-2xl"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-500 uppercase tracking-wider font-bold mb-1">Call Me</p>
+                                        <a href="tel:+918837873822" class="font-bold text-xl text-white hover:underline">+91-8837873822</a>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-5 text-gray-300">
+                                    <div class="w-14 h-14 rounded-full bg-white flex items-center justify-center text-black">
+                                        <i class="ph-fill ph-envelope-simple text-2xl"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-500 uppercase tracking-wider font-bold mb-1">Email Me</p>
+                                        <a href="mailto:lubhavbansal@gmail.com" class="font-bold text-lg md:text-xl text-white hover:underline break-all">lubhavbansal@gmail.com</a>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-5 text-gray-300">
+                                    <div class="w-14 h-14 rounded-full bg-white flex items-center justify-center text-black">
+                                        <i class="ph-fill ph-map-pin text-2xl"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-500 uppercase tracking-wider font-bold mb-1">Location</p>
+                                        <p class="font-bold text-xl text-white">Patiala, Punjab, India</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-5 mt-12 border-t border-white/10 pt-8">
+                                <!-- LinkedIn -->
+                                <a href="https://www.linkedin.com/in/lubhav-bansal-30238134a" target="_blank" rel="noopener noreferrer" 
+                                   class="w-16 h-16 rounded-full glass-dark flex items-center justify-center text-gray-400 transition-all duration-300 hover:-translate-y-2 hover:bg-[#0A66C2] hover:text-white hover:shadow-[0_10px_20px_rgba(10,102,194,0.4)] hover:border-[#0A66C2]">
+                                    <i class="ph-fill ph-linkedin-logo text-4xl"></i>
+                                </a>
+                                
+                                <!-- GitHub -->
+                                <a href="https://github.com/Lubhav1Bansal" target="_blank" rel="noopener noreferrer" 
+                                   class="w-16 h-16 rounded-full glass-dark flex items-center justify-center text-gray-400 transition-all duration-300 hover:-translate-y-2 hover:bg-white hover:text-black hover:shadow-[0_10px_20px_rgba(255,255,255,0.2)] hover:border-white">
+                                    <i class="ph-fill ph-github-logo text-4xl"></i>
+                                </a>
+
+                                <!-- Instagram -->
+                                <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer" 
+                                   class="w-16 h-16 rounded-full glass-dark flex items-center justify-center text-gray-400 transition-all duration-300 hover:-translate-y-2 relative overflow-hidden group hover:shadow-[0_10px_20px_rgba(220,39,67,0.4)] border border-[#36332e] hover:border-transparent">
+                                    <div class="absolute inset-0 bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                    <i class="ph-fill ph-instagram-logo text-4xl relative z-10 group-hover:text-white transition-colors duration-300"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Form -->
+                        <form id="contactForm" class="space-y-5 bg-surface p-8 rounded-3xl border border-white/10 relative">
+                            <!-- Loading Overlay (Hidden by default) -->
+                            <div id="formLoader" class="absolute inset-0 bg-surface/90 rounded-3xl z-10 hidden flex-col items-center justify-center">
+                                <i class="ph ph-spinner-gap text-4xl text-white animate-spin mb-2"></i>
+                                <p class="text-white font-bold">Sending...</p>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-bold text-gray-400 mb-2 ml-1">Your Name</label>
+                                <input type="text" id="senderName" required class="w-full bg-black border border-white/20 rounded-xl px-5 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-white focus:ring-1 focus:ring-white transition-colors" placeholder="John Doe">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-400 mb-2 ml-1">Email Address</label>
+                                <input type="email" id="senderEmail" required class="w-full bg-black border border-white/20 rounded-xl px-5 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-white focus:ring-1 focus:ring-white transition-colors" placeholder="john@example.com">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-400 mb-2 ml-1">Message</label>
+                                <textarea id="senderMessage" required rows="5" class="w-full bg-black border border-white/20 rounded-xl px-5 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-white focus:ring-1 focus:ring-white transition-colors resize-none" placeholder="Tell me about your project..."></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-white text-black font-bold text-lg py-4 rounded-xl hover:bg-gray-200 transition-colors flex items-center justify-center gap-2 mt-4">
+                                Send Message <i class="ph-bold ph-paper-plane-tilt"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer updated with Xalvion name & extra padding for mobile nav -->
+    <footer class="bg-black border-t border-white/10 py-10 text-center text-sm text-gray-500 w-full pb-28 md:pb-10">
+        <p>&copy; 2026 Xalvion Web Design by Lubhav Bansal. Designed with passion in India. All rights reserved.</p>
+    </footer>
+
+    <!-- Scripts for Interactivity -->
+    <script>
+        // Reveal on scroll logic
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach((section) => {
+            observer.observe(section);
+        });
+
+        // Active Nav Link logic
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('text-white', 'scale-105');
+                link.classList.add('text-gray-400');
+                if (link.getAttribute('href').includes(current) && current !== '') {
+                    link.classList.remove('text-gray-400');
+                    link.classList.add('text-white', 'scale-105');
+                }
+            });
+        });
+
+        // WhatsApp & Email Form Submission Logic
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent page reload
+            
+            // Get input values
+            const name = document.getElementById('senderName').value;
+            const email = document.getElementById('senderEmail').value;
+            const message = document.getElementById('senderMessage').value;
+            const loader = document.getElementById('formLoader');
+
+            // Show loading animation
+            loader.classList.remove('hidden');
+            loader.classList.add('flex');
+
+            // 1. Send to Email silently using FormSubmit AJAX
+            fetch("https://formsubmit.co/ajax/lubhavbansal@gmail.com", {
+                method: "POST",
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    _subject: `New Portfolio Inquiry from ${name}!`,
+                    Name: name,
+                    Email: email,
+                    Message: message
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Hide loader
+                loader.classList.add('hidden');
+                loader.classList.remove('flex');
+                
+                // Clear the form
+                document.getElementById('contactForm').reset();
+                
+                // 2. Format and open WhatsApp
+                const whatsappMessage = `*Hello Lubhav!* 🚀%0A%0AI am reaching out from your portfolio website.%0A%0A*Name:* ${name}%0A*Email:* ${email}%0A%0A*Message:*%0A${message}`;
+                const whatsappURL = `https://wa.me/918837873822?text=${whatsappMessage}`;
+                
+                // Open WhatsApp in a new tab
+                window.open(whatsappURL, '_blank');
+            })
+            .catch(error => {
+                console.log(error);
+                alert("Oops! Something went wrong while sending the email. But it will still open WhatsApp!");
+                loader.classList.add('hidden');
+                loader.classList.remove('flex');
+                
+                // Fallback to WhatsApp if email fails
+                const whatsappMessage = `*Hello Lubhav!* 🚀%0A%0AI am reaching out from your portfolio website.%0A%0A*Name:* ${name}%0A*Email:* ${email}%0A%0A*Message:*%0A${message}`;
+                window.open(`https://wa.me/918837873822?text=${whatsappMessage}`, '_blank');
+            });
+        });
+    </script>
+</body>
+</html>
